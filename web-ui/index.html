@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SHL Assessment Recommender</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>SHL Assessment Recommendation</h1>
+    <form id="recommend-form">
+      <input
+        type="text"
+        id="query-input"
+        placeholder="Enter job description or keywords..."
+        required
+      />
+      <button type="submit">Recommend</button>
+    </form>
+
+    <div id="loading" class="hidden">Loading recommendations...</div>
+
+    <table id="results-table" class="hidden">
+      <thead>
+        <tr>
+          <th>Assessment</th>
+          <th>Duration</th>
+          <th>Remote</th>
+          <th>Adaptive</th>
+          <th>Type(s)</th>
+        </tr>
+      </thead>
+      <tbody id="results-body"></tbody>
+    </table>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
