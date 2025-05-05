@@ -6,7 +6,7 @@ def load_test_set(path="test_set.json"):
     with open(path, "r", encoding="utf-8") as f:
         return json.load(f)
 
-def evaluate(api_url="http://localhost:8000/recommend", k=3):
+def evaluate(api_url="https://shl-assessment-recommendation-system-z06m.onrender.com/recommend", k=3):
     test_set = load_test_set()
     recall_scores = []
     ap_scores     = []
@@ -15,7 +15,6 @@ def evaluate(api_url="http://localhost:8000/recommend", k=3):
         query = entry["query"]
         ground_truth = set(entry["relevant_urls"])
 
-        # 1. Call the recommendation API
         resp = requests.post(
             api_url,
             json={"query": query},
@@ -24,10 +23,8 @@ def evaluate(api_url="http://localhost:8000/recommend", k=3):
         resp.raise_for_status()
         results = resp.json()["recommended_assessments"]
 
-        # 2. Extract the top-k predicted URLs
         pred_urls = [item["url"] for item in results][:k]
 
-        # ─── DEBUGGING OUTPUT ──────────────────────────────────────────────────
         print("="*80)
         print(f"Query: {query!r}")
         print(f"Ground truth ({len(ground_truth)} URLs):")
@@ -37,14 +34,11 @@ def evaluate(api_url="http://localhost:8000/recommend", k=3):
         for i, url in enumerate(pred_urls, start=1):
             hit_marker = "✓" if url in ground_truth else "✗"
             print(f"   {i:2d}. {url} {hit_marker}")
-        # ──────────────────────────────────────────────────────────────────────
 
-        # 3. Compute Recall@k
         hits = sum(1 for url in pred_urls if url in ground_truth)
         recall = hits / len(ground_truth) if ground_truth else 0.0
         recall_scores.append(recall)
 
-        # 4. Compute Average Precision@k
         hits = 0
         precision_sum = 0.0
         for i, url in enumerate(pred_urls, start=1):
@@ -54,7 +48,6 @@ def evaluate(api_url="http://localhost:8000/recommend", k=3):
         ap = (precision_sum / min(k, len(ground_truth))) if ground_truth else 0.0
         ap_scores.append(ap)
 
-    # 5. Report mean metrics
     mean_recall = sum(recall_scores) / len(recall_scores)
     mean_map    = sum(ap_scores)     / len(ap_scores)
 

@@ -4,15 +4,13 @@ const loading = document.getElementById('loading');
 const table = document.getElementById('results-table');
 const tbody = document.getElementById('results-body');
 
-// Update this to your local (or hosted) API URL
-const API_BASE = 'http://localhost:8000';
+const API_BASE = 'https://shl-assessment-recommendation-system-z06m.onrender.com';
 
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
   const query = input.value.trim();
   if (!query) return;
 
-  // Show loading
   loading.classList.remove('hidden');
   table.classList.add('hidden');
   tbody.innerHTML = '';
