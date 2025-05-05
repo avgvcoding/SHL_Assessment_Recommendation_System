@@ -7,6 +7,8 @@ An end-to-end two-phase Retrieval-Augmented Generation (RAG) recommendation syst
 * **FastAPI** for serving the recommendation API
 * **Static Web UI** (HTML/CSS/JavaScript) for interacting with the service
 
+https://github.com/user-attachments/assets/a457a413-c7f3-4fd8-b09e-ca3b0710f6f6
+
 ---
 
 ## 🔍 Features
